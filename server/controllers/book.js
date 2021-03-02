@@ -1,3 +1,8 @@
+/**
+ * File name: app.js
+ * Student name: Shedrach Okonofua
+ * Student ID: 300881481
+ */
 let createError = require('http-errors');
 
 // create a reference to the model

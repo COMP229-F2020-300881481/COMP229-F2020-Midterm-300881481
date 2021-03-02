@@ -1,3 +1,8 @@
+/**
+ * File name: app.js
+ * Student name: Shedrach Okonofua
+ * Student ID: 300881481
+ */
 // installed 3rd party packages
 let createError = require('http-errors');
 let express = require('express');
