@@ -1,6 +1,4 @@
-let express = require('express');
-let router = express.Router();
-let mongoose = require('mongoose');
+let createError = require('http-errors');
 
 // create a reference to the model
 let Book = require('../models/book');
@@ -21,7 +19,7 @@ module.exports.displayBookList = (req, res, next) => {
 }
 
 module.exports.displayAddPage = (req, res, next) => {
-    res.render('book/add', {title: 'Add Book'})          
+    res.render('book/add', {title: 'Add Book'});
 }
 
 module.exports.processAddPage = (req, res, next) => {
@@ -47,15 +45,34 @@ module.exports.processAddPage = (req, res, next) => {
     });
 
 }
-/*
-Add your code here to display EDIT
-*/
-module.exports.displayEditPage = (req, res) => {};
-/*
-Add your code here to process EDIT
-*/
 
+module.exports.displayEditPage = async (req, res, next) => {
+    try {
+        const book = await Book.findById(req.params.id);
+        if (!book) throw new Error("Book not found");
+        res.render('book/edit', { title: "Edit Book", book });
+    } catch (err) {
+        next(createError(404));
+    }
+};
 
-/*
-Add your code here to perform DELETE operation
-*/
+module.exports.processEditPage = async (req, res, next) => {
+    try {
+        console.log(req.body)
+        await Book.findByIdAndUpdate(req.params.id, req.body);
+        res.redirect("/book-list");
+    } catch(error) {
+        res.end(error);
+    }
+};
+
+module.exports.processDeletePage = async (req, res, next) => {
+    try {
+        console.log(req.params.id)
+        await Book.deleteOne({ "_id": req.params.id });
+        res.redirect("/book-list");
+    } catch(error) {
+        res.end(error);
+    }
+};
+
