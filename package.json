@@ -18,5 +18,8 @@
     "mongoose": "^5.10.2",
     "morgan": "~1.9.1",
     "popper.js": "^1.16.1"
+  },
+  "devDependencies": {
+    "faker": "^5.4.0"
   }
 }
